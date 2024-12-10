@@ -1,0 +1,410 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weathercast</title>
+    <link rel="shortcut icon" href="images/favicon.svg" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <script src="js/jquery-3.5.1.slim.min.js" defer></script>
+    <script src="js/popper.min.js" defer></script>
+    <script src="js/bootstrap.min.js" defer></script>
+</head>
+
+<body>
+
+    <div class="content-container">
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="index.html">
+                    <h1 class="mt-5 text-center logo">Weathercast</h1>
+                </a>
+
+                <div class="nav-links-container">
+
+                    <button id="toggleSearchbar" title="Search">
+                        <div class="sidebar-link">
+                            <img class="search-icon sidebar-icon" src="Images/icons/search icon.png" alt="">
+                            <p>Search</p>
+                        </div>
+                    </button>
+                    <button onclick="location.href='#';" id="home-button" title="Home">
+                        <div class="sidebar-link">
+                            <img class="sidebar-icon" src="images/icons/Home.svg" alt="Home">
+                            <p>Home</p>
+                        </div>
+                    </button>
+                    <button onclick="location.href='#bottomContainer';" title="About">
+                        <div class="sidebar-link">
+                            <img class="sidebar-icon" src="images/icons/Location.svg" alt="About">
+                            <p>Contact</p>
+                        </div>
+                    </button>
+                    <button onclick="shareContent()" title="Share">
+                        <div class="sidebar-link">
+                            <img class="sidebar-icon" src="images/icons/share.svg" alt="Share">
+                            <p>Share</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div id="fallback" style="display: none;">
+                    <button id="closePasteWindow" class="close-window"></button>
+                    <p>Share the fun.</p>
+                    <input type="text" id="share-url" readonly>
+                    <button onclick="copyToClipboard()" class="copy-button">Copy</button>
+                </div>
+
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="theme-toggle">Dark Mode</a>
+                        </li>
+
+
+                        <div class="mobile-nav-links-container">
+
+                            <button id="mobiletoggleSearchbar" title="Search">
+                                <div class="sidebar-link">
+                                    <img class="search-icon sidebar-icon" src="images/icons/search icon.png" alt="">
+                                    <p>Search</p>
+                                </div>
+                            </button>
+                            <button onclick="location.href='#';" id="home-button" title="Home">
+                                <div class="sidebar-link">
+                                    <img class="sidebar-icon" src="images/icons/Home.svg" alt="Home">
+                                    <p>Home</p>
+                                </div>
+                            </button>
+                            <button onclick="location.href='#bottomContainer';" title="About">
+                                <div class="sidebar-link">
+                                    <img class="sidebar-icon" src="images/icons/Location.svg" alt="About">
+                                    <p>Contact</p>
+                                </div>
+                            </button>
+                            <button onclick="shareContent()" title="Share">
+                                <div class="sidebar-link">
+                                    <img class="sidebar-icon" src="images/icons/share.svg" alt="Share">
+                                    <p>Share</p>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="mobile-search-container" id="mobilesearchBar">
+                            <div method="post" class="search-bar">
+                                <input class="search-box" type="search" placeholder="Search city, state, town..."
+                                    id="searchBox" name="serach">
+                                <button class="search-button" type="submit" id="mobilesearchButton"><img
+                                        src="images/icons/search icon.png" alt=""></button>
+                                <div id="suggestions"></div>
+                            </div>
+                            <button id="mobilehideSearchbar" class="hide-searchbar"><img
+                                    src="images/icons/Cancel light.svg" alt=""></button>
+                        </div>
+
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="search-container" id="searchBar">
+                <div method="post" class="search-bar">
+                    <input class="search-box" type="search" placeholder="Search city, state, town..." id="search-box"
+                        name="serach">
+                    <button class="search-button" type="submit" id="searchButton"><img
+                            src="images/icons/search icon.png" alt=""></button>
+                    <div id="suggestions-container"></div>
+                </div>
+                <button id="hideSearchbar" class="hide-searchbar"><img src="images/icons/Cancel light.svg"
+                        alt=""></button>
+            </div>
+
+        </header>
+
+        <div class="main-container">
+
+            <div class="container">
+                <div class="today">
+                    <div id="current-weather" class="my-5">
+                        <h2>Location</h2>
+                        <div class="day">
+                            <h6>Today</h6>
+                        </div>
+                        <div class="time">
+                            <h6>00:00:00 AM</h6>
+                        </div>
+                        <br>
+                        <div class="temp-icon-container">
+                            <div class="weather-icon current-weather-icon"><i class="fas fa-sun"></i></div>
+                            <h2 class="current-temperature">0°C</h2>
+                        </div>
+                        <p>Weather: clear sky</p>
+                        <p>Humidity: 0%</p>
+                        <p>Wind Speed: 0 m/s</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Latitude: 0.0000, Longitude: 0.0000</p>
+                    </div>
+
+                    <div class="today-hourly">
+                        <h4 class="tile-title">Hourly Forecast</h4>
+                        <div id="hourly-forecast" class="my-5">
+                            <div class="forecast-hour">
+                                <h6>00:00:00 AM</h6>
+                                <br>
+                                <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                                <br>
+                                <h3>0°C</h3>
+                                <br>
+                                <p>clear sky</p>
+                                <p>Humidity: 0%</p>
+                                <p>Wind Speed: 0 m/s</p>
+                            </div>
+
+                            <div class="forecast-hour">
+                                <h6>00:00:00 AM</h6>
+                                <br>
+                                <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                                <br>
+                                <h3>0°C</h3>
+                                <br>
+                                <p>clear sky</p>
+                                <p>Humidity: 0%</p>
+                                <p>Wind Speed: 0 m/s</p>
+                            </div>
+
+                            <div class="forecast-hour">
+                                <h6>00:00:00 AM</h6>
+                                <br>
+                                <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                                <br>
+                                <h3>0°C</h3>
+                                <br>
+                                <p>clear sky</p>
+                                <p>Humidity: 0%</p>
+                                <p>Wind Speed: 0 m/s</p>
+                            </div>
+
+                            <div class="forecast-hour">
+                                <h6>00:00:00 AM</h6>
+                                <br>
+                                <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                                <br>
+                                <h3>0°C</h3>
+                                <br>
+                                <p>clear sky</p>
+                                <p>Humidity: 0%</p>
+                                <p>Wind Speed: 0 m/s</p>
+                            </div>
+
+                            <div class="forecast-hour">
+                                <h6>00:00:00 AM</h6>
+                                <br>
+                                <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                                <br>
+                                <h3>0°C</h3>
+                                <br>
+                                <p>clear sky</p>
+                                <p>Humidity: 0%</p>
+                                <p>Wind Speed: 0 m/s</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="five-day-container">
+                    <h4 class="tile-title">5-Day Forecast</h4>
+                    <div id="five-day-forecast" class="my-5">
+                        <div class="forecast-day">
+                            <div class="day">
+                                <h6>Day 1</h6>
+                            </div>
+                            <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                            <br>
+                            <h3>0°C</h3>
+                            <br>
+                            <p>clear sky</p>
+                            <p>Humidity: 0%</p>
+                            <p>Wind Speed: 0 m/s</p>
+                        </div>
+
+                        <div class="forecast-day">
+                            <div class="day">
+                                <h6>Day 2</h6>
+                            </div>
+                            <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                            <br>
+                            <h3>0°C</h3>
+                            <br>
+                            <p>clear sky</p>
+                            <p>Humidity: 0%</p>
+                            <p>Wind Speed: 0 m/s</p>
+                        </div>
+
+                        <div class="forecast-day">
+                            <div class="day">
+                                <h6>Day 3</h6>
+                            </div>
+                            <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                            <br>
+                            <h3>0°C</h3>
+                            <br>
+                            <p>clear sky</p>
+                            <p>Humidity: 0%</p>
+                            <p>Wind Speed: 0 m/s</p>
+                        </div>
+
+                        <div class="forecast-day">
+                            <div class="day">
+                                <h6>Day 4</h6>
+                            </div>
+                            <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                            <br>
+                            <h3>0°C</h3>
+                            <br>
+                            <p>clear sky</p>
+                            <p>Humidity: 0%</p>
+                            <p>Wind Speed: 0 m/s</p>
+                        </div>
+
+                        <div class="forecast-day">
+                            <div class="day">
+                                <h6>Day 5</h6>
+                            </div>
+                            <div class="weather-icon"><i class="fas fa-sun"></i></div>
+                            <br>
+                            <h3>0°C</h3>
+                            <br>
+                            <p>clear sky</p>
+                            <p>Humidity: 0%</p>
+                            <p>Wind Speed: 0 m/s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="extra-content">
+
+        <div class="bottom-container" id="bottomContainer">
+
+            <div class="information-container">
+
+                <div class="contact-us-container">
+                    <h4 class="bottom-title">Contact Us</h4>
+                    <p class="contact-us">nelsonlikando@outlook.com</p>
+                    <p class="contact-us">Feedback</p>
+                    <p class="contact-us">Customer Service</p>
+                    <p class="contact-us">Terms and Conditions</p>
+                </div>
+
+                <div class="contact-us-container">
+                    <h4 class="bottom-title">Services</h4>
+                    <p class="contact-us">nelsonlikando@outlook.com</p>
+                    <p class="contact-us">Feedback</p>
+                    <p class="contact-us">Customer Service</p>
+                    <p class="contact-us">Terms and Conditions</p>
+                </div>
+
+                <div class="contact-us-container">
+                    <h4 class="bottom-title">Quick Links</h4>
+                    <ul>
+                        <li><a class="contact-us" href="http://www.icuzambia.net">ICU Zambia</a></li>
+                        <li><a class="contact-us" href="https://www.zrdc.org">ZRDC</a></li>
+                        <li><a class="contact-us" href="https://fontawesome.com/">Font Awesome</a></li>
+                        <li><a class="contact-us" href="https://openweathermap.org/">Open Weather</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="socials-container">
+                <div class="socials">
+                    <a href="https://openweathermap.org/" class="social-link link4"><img title="Open Weather"
+                            src="images/icons/open weather.png" alt="Open Weather" class="social-button">Open
+                        Weather</a>
+                    <a href="http://www.icuzambia.net" class="social-link link1"><img title="ICU Zambia"
+                            src="images/icons/ICU logo.png" alt="ICU Zambia" class="social-button">ICU Zambia</a>
+                    <a href="https://fontawesome.com/" class="social-link link3"><img title="Font Awesome"
+                            src="images/icons/font awesome.png" alt="Font Awesome" class="social-button">Font
+                        Awesome</a>
+                    <a href="https://www.zrdc.org" class="social-link link2" link2><img title="ZRDC"
+                            src="images/icons/zrdc.png" alt="ZRDC" class="social-button">ZRDC</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-container">
+            <foooter class="footer" id="footer">
+
+                <div class="copyright">
+                    <td align="middle"><span class="copyright">&#169; 2024 Serenje Weather <br> All Rights Reserved.
+                            Designed
+                            and Maintained By Nelson&nbsp;Likando, SIN:&nbsp;2208471916</td>
+                </div>
+
+            </foooter>
+        </div>
+
+    </div>
+
+    <script>
+
+        function shareContent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Share Location',
+                    text: 'Hello there, here is my location',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch((error) => {
+                    console.error('Error sharing:', error);
+                });
+            } else {
+                showFallback();
+            }
+        }
+
+        function showFallback() {
+            const fallback = document.getElementById('fallback');
+            const shareUrl = document.getElementById('share-url');
+            shareUrl.value = window.location.href;
+            fallback.style.display = 'flex';
+        }
+
+        function copyToClipboard() {
+            const closePasteWindow = document.getElementById('closePasteWindow');
+            const shareUrl = document.getElementById('share-url');
+            shareUrl.select();
+            document.execCommand('copy');
+            alert('Link copied to clipboard!');
+            fallback.style.display = 'none';
+        }
+
+        function closePasteWindow() {
+            const closePasteWindow = document.getElementById('closePasteWindow');
+            closePasteWindow.addEventListener('click', function () {
+                fallback.style.display = 'none';
+            })
+        }
+        closePasteWindow();
+
+    </script>
+
+
+    <script src="js/script.js" defer></script>
+
+</body>
+
+</html>

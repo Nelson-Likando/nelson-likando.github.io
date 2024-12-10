@@ -1,0 +1,45 @@
+body {
+  background-image: url("../images/background\ image\ 4.jpg");
+  transition: background-image 1s ease;
+}
+
+body.dark-theme {
+  background-color: #333;
+  color: #ffffffaf;
+  background-image: url("../images/background\ image\ 2.jpg");
+}
+
+body.dark-theme nav {
+  background-color: rgba(68, 68, 68, 0.6);
+}
+
+body.dark-theme h1 {
+  color: #ffa500;
+}
+
+
+@media(max-width: 768px) {
+
+  body.dark-theme #current-weather,
+body.dark-theme .forecast-day,
+body.dark-theme .forecast-hour {
+  background: #5555558f;
+  color: #ffffffc3;
+}
+}
+
+@media (min-width: 768.1px) {
+
+  body.dark-theme #current-weather,
+  body.dark-theme #five-day-forecast,
+  body.dark-theme #hourly-forecast {
+    background: #5555558f;
+    color: #ffffffb2;
+  }
+
+}
+
+body.dark-theme .forecast-hour,
+body.dark-theme .forecast-day {
+  border-left: solid rgba(0, 0, 0, 0.2) 1.5px;
+}
